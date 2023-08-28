@@ -1,9 +1,9 @@
-import Fastify from "fastify";
-import PagePool from "./browser/pagepool";
+// import Fastify from "fastify";
+// import PagePool from "./browser/pagepool";
+import {run} from "./browser/pagepoolTest"
+// const fastify = Fastify({ logger: true });
 
-const fastify = Fastify({ logger: true });
-
-const { PAGE_COUNT = "5", PORT = "8999" } = process.env;
+// const { PAGE_COUNT = "5"} = process.env;
 
 (async () => {
 	console.log("connecting to puppeteer...");
@@ -12,20 +12,24 @@ const { PAGE_COUNT = "5", PORT = "8999" } = process.env;
 
 	console.log("initializing pages...");
 
-	await new PagePool(parseInt(PAGE_COUNT, 10)).init();
+	// const pagepool =  await new PagePool(parseInt(PAGE_COUNT, 10)).init();
 
-	console.log("ready");
+	console.log("ready:");
 
-	fastify.register(require("./routers/api").default, { prefix: "/api" });
-	fastify.register(require("./routers/index").default, { prefix: "/" });
+	run()
 
-	try {
-		await fastify.listen({
-			port: Number(PORT),
-			host: "0.0.0.0",
-		});
-	} catch (err) {
-		fastify.log.error(err);
-		process.exit(1);
-	}
+
+
+	// fastify.register(require("./routers/api").default, { prefix: "/api" });
+	// fastify.register(require("./routers/index").default, { prefix: "/" });
+
+	// try {
+	// 	await fastify.listen({
+	// 		port: Number(PORT),
+	// 		host: "0.0.0.0",
+	// 	});
+	// } catch (err) {
+	// 	fastify.log.error(err);
+	// 	process.exit(1);
+	// }
 })();
